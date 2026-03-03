@@ -78,7 +78,7 @@
                 <tr>
                     <td width="30%" valign="top">
                         <b>Menu Của Tôi</b><br><br>
-                        - <a href="report_lost">Báo mất đồ (Lost)</a><br>
+                        - <a href="reportLost.jsp">Báo mất đồ (Lost)</a><br>
                         - <a href="report_found">Báo nhặt được đồ (Found)</a><br>
                         - <a href="my_items">Các tin tôi đã đăng</a><br>
                         - <a href="my_claims">Tình trạng yêu cầu nhận đồ</a>
