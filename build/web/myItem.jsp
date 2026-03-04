@@ -66,6 +66,13 @@
                 text-decoration: none;
                 color: #007bff;
             }
+            .btn-lost {
+    background-color: #e74c3c; /* đỏ */
+}
+
+.btn-found {
+    background-color: #27ae60; /* xanh lá */
+}
         </style>
     </head>
     <body>
@@ -78,7 +85,8 @@
             <c:remove var="successMessage" scope="session"/>
         </c:if>
 
-        <a href="report-lost" class="btn">+ Đăng tin báo mất mới</a>
+<a href="report-lost" class="btn btn-lost">+ Đăng tin báo mất mới</a>
+<a href="report_found" class="btn btn-found">+ Đăng tin báo nhặt mới</a>
 
         <!-- BẢNG 1: Đồ tôi đã báo mất -->
         <h2>Danh sách đồ vật tôi đã báo mất</h2>

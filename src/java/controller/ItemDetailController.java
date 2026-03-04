@@ -7,15 +7,19 @@ package controller;
 
 import dal.ItemDAO;
 import dal.ItemImagesDAO;
+import dal.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Item_Images;
 import model.Items;
+import model.Notification;
+import model.Users;
 
 /**
  *
@@ -56,15 +60,16 @@ public class ItemDetailController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
+
         String idRaw = request.getParameter("id");
         try {
             int itemId = Integer.parseInt(idRaw);
 
             ItemDAO itemDao = new ItemDAO();
             Items item = itemDao.getItemById(itemId);
-
             if (item == null) {
                 request.setAttribute("error", "Không tìm thấy bài đăng.");
                 request.getRequestDispatcher("item_detail.jsp").forward(request, response);
@@ -76,6 +81,15 @@ public class ItemDetailController extends HttpServlet {
 
             request.setAttribute("item", item);
             request.setAttribute("images", images);
+
+            // Nếu đang đăng nhập và là CHỦ BÀI thì load message đã lưu trong Notifications
+            HttpSession session = request.getSession(false);
+            Users currentUser = (session == null) ? null : (Users) session.getAttribute("currentUser");
+            if (currentUser != null && currentUser.getUserId() == item.getUserId()) {
+                NotificationDAO nDao = new NotificationDAO();
+                List<Notification> itemMessages = nDao.getMessagesByItemForOwner(currentUser.getUserId(), itemId);
+                request.setAttribute("itemMessages", itemMessages);
+            }
 
             request.getRequestDispatcher("item_detail.jsp").forward(request, response);
 
@@ -95,8 +109,45 @@ public class ItemDetailController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        doGet(request, response);
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        Users sender = (Users) session.getAttribute("currentUser");
+        if (sender == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        String idRaw = request.getParameter("id");
+        String messageText = request.getParameter("message");
+
+        try {
+            int itemId = Integer.parseInt(idRaw);
+
+            if (messageText == null || messageText.trim().isEmpty()) {
+                response.sendRedirect("item_detail?id=" + itemId);
+                return;
+            }
+
+            ItemDAO itemDao = new ItemDAO();
+            Items item = itemDao.getItemById(itemId);
+            if (item == null) {
+                response.sendRedirect("home.jsp");
+                return;
+            }
+
+            int ownerUserId = item.getUserId();
+            String title = "Tin nhắn mới";
+            String msg = sender.getFullName() + ": " + messageText.trim();
+
+            NotificationDAO nDao = new NotificationDAO();
+            nDao.insertMessageToItemOwner(ownerUserId, itemId, title, msg);
+
+            response.sendRedirect("item_detail?id=" + itemId);
+
+        } catch (Exception e) {
+            response.sendRedirect("home.jsp");
+        }
     }
 
     /** 

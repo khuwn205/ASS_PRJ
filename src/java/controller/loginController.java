@@ -97,7 +97,7 @@ public class loginController extends HttpServlet {
             session.setAttribute("userRole", loggedInUser.getRole());
 
             // 4. Chuyển hướng về trang chung sau đăng nhập
-            response.sendRedirect("home.jsp");
+            response.sendRedirect("home");
         } else {
             request.setAttribute("error", "Sai tài khoản hoặc mật khẩu!");
             request.getRequestDispatcher("login.jsp").forward(request, response);

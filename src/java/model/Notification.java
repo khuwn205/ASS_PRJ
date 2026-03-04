@@ -2,27 +2,18 @@ package model;
 
 import java.util.Date;
 
-public class Notifications {
+public class Notification {
 
     private int notificationId;
     private int userId;
+    private String notificationType;
     private String title;
     private String message;
     private boolean isRead;
-    private int relatedItemId;
+    private Integer relatedItemId;
     private Date createdAt;
 
-    public Notifications() {
-    }
-
-    public Notifications(int notificationId, int userId, String title, String message, boolean isRead, Integer relatedItemId, Date createdAt) {
-        this.notificationId = notificationId;
-        this.userId = userId;
-        this.title = title;
-        this.message = message;
-        this.isRead = isRead;
-        this.relatedItemId = relatedItemId;
-        this.createdAt = createdAt;
+    public Notification() {
     }
 
     public int getNotificationId() {
@@ -39,6 +30,14 @@ public class Notifications {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(String notificationType) {
+        this.notificationType = notificationType;
     }
 
     public String getTitle() {
@@ -79,10 +78,5 @@ public class Notifications {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    @Override
-    public String toString() {
-        return "Notifications{" + "notificationId=" + notificationId + ", userId=" + userId + ", title=" + title + ", message=" + message + ", isRead=" + isRead + ", relatedItemId=" + relatedItemId + ", createdAt=" + createdAt + '}';
     }
 }

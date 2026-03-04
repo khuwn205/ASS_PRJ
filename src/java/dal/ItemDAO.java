@@ -193,6 +193,88 @@ public boolean updateItem(Items item) {
     }
     return false;
 }
+    /** Lấy N tin báo mất mới nhất (public trên home). */
+    public List<Items> getRecentLostItems(int limit) {
+        List<Items> list = new ArrayList<>();
+        String sql = "SELECT TOP (?) * FROM Items WHERE type = 'lost' ORDER BY created_at DESC";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, limit);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(mapRowToItem(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi getRecentLostItems: " + e.getMessage());
+        }
+        return list;
+    }
+
+    /** Lấy N tin báo nhặt được mới nhất (public trên home). */
+    public List<Items> getRecentFoundItems(int limit) {
+        List<Items> list = new ArrayList<>();
+        String sql = "SELECT TOP (?) * FROM Items WHERE type = 'found' ORDER BY created_at DESC";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, limit);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(mapRowToItem(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi getRecentFoundItems: " + e.getMessage());
+        }
+        return list;
+    }
+
+    /** Lấy tất cả tin báo mất (trang Xem tất cả). */
+    public List<Items> getAllLostItems() {
+        List<Items> list = new ArrayList<>();
+        String sql = "SELECT * FROM Items WHERE type = 'lost' ORDER BY created_at DESC";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(mapRowToItem(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi getAllLostItems: " + e.getMessage());
+        }
+        return list;
+    }
+
+    /** Lấy tất cả tin báo nhặt được (trang Xem tất cả). */
+    public List<Items> getAllFoundItems() {
+        List<Items> list = new ArrayList<>();
+        String sql = "SELECT * FROM Items WHERE type = 'found' ORDER BY created_at DESC";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(mapRowToItem(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi getAllFoundItems: " + e.getMessage());
+        }
+        return list;
+    }
+
+    private Items mapRowToItem(ResultSet rs) throws SQLException {
+        Items item = new Items();
+        item.setItemId(rs.getInt("item_id"));
+        item.setUserId(rs.getInt("user_id"));
+        item.setCategoryId(rs.getInt("category_id"));
+        item.setLocationId(rs.getInt("location_id"));
+        item.setTitle(rs.getString("title"));
+        item.setDescription(rs.getString("description"));
+        item.setType(rs.getString("type"));
+        item.setStatus(rs.getString("status"));
+        item.setDateIncident(rs.getTimestamp("date_incident"));
+        item.setCreatedAt(rs.getTimestamp("created_at"));
+        item.setUpdatedAt(rs.getTimestamp("updated_at"));
+        return item;
+    }
+
 public int insertFoundItemReturnId(Items item) {
     String sql = "INSERT INTO Items (user_id, category_id, location_id, title, description, type, status, date_incident) "
                + "VALUES (?, ?, ?, ?, ?, 'found', 'processing', ?)";

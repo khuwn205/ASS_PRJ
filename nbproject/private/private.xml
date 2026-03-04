@@ -2,6 +2,21 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="CSD"/>
+        <group name="CSD">
+            <file>file:/E:/ASS_PRJ/src/java/controller/DeleteItemController.java</file>
+            <file>file:/E:/ASS_PRJ/web/myClaims.jsp</file>
+            <file>file:/E:/ASS_PRJ/web/item_detail.jsp</file>
+            <file>file:/E:/ASS_PRJ/web/myItem.jsp</file>
+            <file>file:/E:/ASS_PRJ/web/reportFound.jsp</file>
+            <file>file:/E:/ASS_PRJ/src/java/controller/EditItemController.java</file>
+            <file>file:/E:/ASS_PRJ/web/edit_item.jsp</file>
+            <file>file:/E:/ASS_PRJ/src/java/controller/ReportFoundController.java</file>
+            <file>file:/E:/ASS_PRJ/src/java/dal/ItemImagesDAO.java</file>
+            <file>file:/E:/ASS_PRJ/src/java/controller/MyItemsController.java</file>
+            <file>file:/E:/ASS_PRJ/src/java/controller/ItemDetailController.java</file>
+            <file>file:/E:/ASS_PRJ/src/java/controller/HomeController.java</file>
+            <file>file:/E:/ASS_PRJ/src/java/dal/ItemDAO.java</file>
+            <file>file:/E:/ASS_PRJ/web/home.jsp</file>
+        </group>
     </open-files>
 </project-private>

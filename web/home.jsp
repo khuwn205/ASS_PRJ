@@ -49,6 +49,8 @@
                     </td>
                 </tr>
             </table>
+            <br/>
+            <jsp:include page="fragments/homePublicFeed.jsp" />
         </c:when>
 
         <%-- 2. NẾU LÀ STAFF --%>
@@ -69,6 +71,8 @@
                     </td>
                 </tr>
             </table>
+            <br/>
+            <jsp:include page="fragments/homePublicFeed.jsp" />
         </c:when>
 
         <%-- 3. NẾU LÀ STUDENT (VÀ CÁC TRƯỜNG HỢP CÒN LẠI) --%>
@@ -84,32 +88,7 @@
                         - <a href="my_claims">Tình trạng yêu cầu nhận đồ</a>
                     </td>
                     <td valign="top">
-                        <b>Bảng tin đồ thất lạc mới nhất</b><br><br>
-                        <table border="1" width="100%">
-                            <tr>
-                                <td><b>Tên đồ vật</b></td>
-                                <td><b>Loại</b></td>
-                                <td><b>Ngày báo</b></td>
-                                <td><b>Hành động</b></td>
-                            </tr>
-                            <c:forEach var="it" items="${latestFoundItems}">
-                                <tr>
-                                    <td>${it.title}</td>
-                                    <td>${it.type}</td>
-                                    <td>${it.createdAt}</td>
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/item_detail?id=${it.itemId}">
-                                            Xem &amp; Nhận
-                                        </a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                            <c:if test="${empty latestFoundItems}">
-                                <tr>
-                                   <td colspan="4">Chưa có đồ nhặt được nào.</td>
-                                </tr>
-                            </c:if>
-                        </table>
+                        <jsp:include page="fragments/homePublicFeed.jsp" />
                     </td>
                 </tr>
             </table>
