@@ -29,7 +29,7 @@
         <p class="error">${error}</p>
     </c:if>
 
-    <form action="reportLost" method="POST">
+    <form action="report-lost" method="POST">
         <div class="form-group">
             <label for="title">Tên đồ vật bị mất (*):</label>
             <input type="text" id="title" name="title" required placeholder="Ví dụ: Ví da màu đen">

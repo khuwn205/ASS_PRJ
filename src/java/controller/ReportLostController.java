@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import model.Items;
 import model.Users; // Giả sử bạn có model Users
 
-@WebServlet(name = "ReportLostController", urlPatterns = {"/reportLost"})
+@WebServlet(name = "ReportLostController", urlPatterns = {"/report-lost"})
 public class ReportLostController extends HttpServlet {
 
     @Override
@@ -40,6 +40,9 @@ public class ReportLostController extends HttpServlet {
             response.sendRedirect("login.jsp"); // Bắt buộc đăng nhập
             return;
         }
+        // Bắt buộc phải dùng ID của người đang đăng nhập
+    int userId = loggedInUser.getUserId();
+
 
         // 2. Lấy dữ liệu từ Form gửi lên
         String title = request.getParameter("title");
@@ -66,18 +69,24 @@ public class ReportLostController extends HttpServlet {
             // 4. Gọi DAO để lưu vào DB
             ItemDAO itemDAO = new ItemDAO();
             boolean isSuccess = itemDAO.insertLostItem(newItem);
-
-            if (isSuccess) {
-                request.setAttribute("message", "Báo mất đồ thành công!");
+if (isSuccess) {
+                // 1. Lưu thông báo thành công vào Session (vì Redirect sẽ làm mất request)
+                request.getSession().setAttribute("successMessage", "Đăng tin báo mất đồ thành công!");
+                
+                // 2. Chuyển hướng về trang danh sách bài đăng của tôi
+                // Lưu ý: Thay "my-items" bằng đường dẫn URL Controller hiển thị bài đăng của bạn
+                response.sendRedirect("my-items"); 
+                return; // Dừng thực thi các lệnh bên dưới
             } else {
-                request.setAttribute("error", "Có lỗi xảy ra, vui lòng thử lại.");
+                request.setAttribute("error", "Lưu vào Database thất bại, hãy kiểm tra Console của server!");
             }
             
         } catch (Exception e) {
-            request.setAttribute("error", "Dữ liệu nhập không hợp lệ: " + e.getMessage());
+            request.setAttribute("error", "Lỗi xử lý dữ liệu: " + e.getMessage());
+            e.printStackTrace();
         }
 
-        // 5. Quay lại trang form cùng thông báo
+        // Nếu thất bại (hoặc có lỗi), vẫn ở lại trang báo mất đồ và hiện lỗi
         request.getRequestDispatcher("reportLost.jsp").forward(request, response);
     }
 }

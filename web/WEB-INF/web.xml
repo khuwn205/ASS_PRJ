@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <servlet-mapping>
+        <servlet-name>MyItemsController</servlet-name>
+        <url-pattern>/my-items</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteItemController</servlet-name>
+        <url-pattern>/delete_item</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditItemController</servlet-name>
+        <url-pattern>/edit_item</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ItemDetailController</servlet-name>
+        <url-pattern>/item_detail</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
@@ -14,6 +30,22 @@
     <servlet>
         <servlet-name>logoutController</servlet-name>
         <servlet-class>controller.logoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MyItemsController</servlet-name>
+        <servlet-class>controller.MyItemsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteItemController</servlet-name>
+        <servlet-class>controller.DeleteItemController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditItemController</servlet-name>
+        <servlet-class>controller.EditItemController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ItemDetailController</servlet-name>
+        <servlet-class>controller.ItemDetailController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
